@@ -2,6 +2,7 @@ import { useState } from "react";
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
 import TodoDashboard from "./TodoDashboard";
+import styled from "styled-components";
 const SAMPLE_TODOS = [
   { id: 1, text: "Buy milk", completed: false },
   { id: 2, text: "Clean the house", completed: false },
@@ -37,17 +38,23 @@ const TodoContainer = () => {
   };
 
   return (
-    <div>
+    <TodoContainerWrapper>
       <TodoDashboard />
-      <TodoForm addTodos={addTodos} />
 
       <TodoList
         todos={todos}
         handleDelete={handleDelete}
         handlesUpdated={handlesUpdated}
       />
-    </div>
+      <TodoForm addTodos={addTodos} />
+    </TodoContainerWrapper>
   );
 };
+
+const TodoContainerWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
 
 export default TodoContainer;

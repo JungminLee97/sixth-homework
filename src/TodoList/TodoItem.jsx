@@ -1,23 +1,66 @@
+import styled from "styled-components";
+
 const TodoItem = ({ completed, text, id, handleDelete, handlesUpdated }) => {
-    return (
-      <li style={{ textDecoration: completed ? "line-through" : "none" }}>
-        {text}
-        <button
+  return (
+    <TodoItemWrapper>
+      <TodoItemText $completed={completed}>{text}</TodoItemText>
+
+      <TodoItemActions>
+        <ActionButton
           onClick={() => handlesUpdated(id)}
-          style={{ width: 60, height: 20 }}
+          $bgColor={completed ? "#242424" : "#582be6"}
         >
-          {completed ? "완료" : "미완료"}
-        </button>
-        <button
+          {completed ? "취소하기" : "완료하기"}
+        </ActionButton>
+
+        <ActionButton
           onClick={() => {
             handleDelete(id);
           }}
+          $bgColor="#ff4033"
         >
-          삭제
-        </button>
-      </li>
-    );
-  };
-  
-  export default TodoItem;
-  
+          삭제하기
+        </ActionButton>
+      </TodoItemActions>
+    </TodoItemWrapper>
+  );
+};
+
+const TodoItemWrapper = styled.li`
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;
+
+const TodoItemText = styled.p`
+  text-decoration: ${({ $completed }) =>
+    $completed ? "line-through" : "none"};
+`;
+
+const TodoItemActions = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+export const ActionButton = styled.button`
+  background-color: ${({ $bgColor = "#e6582b" }) => $bgColor};
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  word-break: keep-all;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export default TodoItem;
