@@ -1,21 +1,17 @@
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
+import { useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 
-const TodoList = ({ todos, handleDelete, handlesUpdated }) => {
+const TodoList = () => {
+  const { todos } = useContext(TodoContext);
   return (
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
 
       <TodoListContent>
         {todos.map(({ id, text, completed }) => (
-          <TodoItem
-            key={id}
-            id={id}
-            completed={completed}
-            text={text}
-            handleDelete={handleDelete}
-            handlesUpdated={handlesUpdated}
-          />
+          <TodoItem key={id} id={id} completed={completed} text={text} />
         ))}
       </TodoListContent>
     </TodoListSection>

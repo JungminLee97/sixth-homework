@@ -1,11 +1,14 @@
 import RootLayout from "./layout/RootLayout";
+import TodoProvider from "./provider/TodoProvider";
 import TodoContainer from "./TodoList/TodoContainer";
 
 const TodoListInit = () => {
   return (
-    <RootLayout>
-      <TodoContainer />
-    </RootLayout>
+    <TodoProvider>
+      <RootLayout>
+        <TodoContainer />
+      </RootLayout>
+    </TodoProvider>
   );
 };
 
