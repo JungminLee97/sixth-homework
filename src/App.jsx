@@ -1,9 +1,9 @@
 import RootLayout from "./layout/RootLayout";
 import HomePage from "./pages/HomePage";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TodoDetailPage from "./pages/TodoDetailPage";
 import TodoProvider from "./provider/TodoProvider";
-const TodoListInit = () => {
+const App = () => {
   return (
     <TodoProvider>
       <BrowserRouter>
@@ -18,4 +18,4 @@ const TodoListInit = () => {
   );
 };
 
-export default TodoListInit;
+export default App;

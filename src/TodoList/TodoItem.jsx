@@ -1,10 +1,17 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { TodoContext } from "../context/TodoContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const TodoItem = ({ completed, text, id }) => {
   const { handlesUpdated, handleDelete } = useContext(TodoContext);
+  const navigate = useNavigate();
+  const navigateAfterDelete = (id) => {
+    handleDelete(id);
+
+    navigate("/");
+  };
+
   return (
     <TodoItemWrapper>
       <TodoItemLink to={`/todos/${id}`} $completed={completed}>
@@ -21,7 +28,7 @@ const TodoItem = ({ completed, text, id }) => {
 
         <ActionButton
           onClick={() => {
-            handleDelete(id);
+            navigateAfterDelete(id);
           }}
           $bgColor="#ff4033"
         >
@@ -68,6 +75,8 @@ export const ActionButton = styled.button`
   border-radius: 0.5rem;
   cursor: pointer;
   word-break: keep-all;
+  text-align: center;
+
   &:hover {
     opacity: 0.8;
   }

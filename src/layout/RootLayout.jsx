@@ -7,7 +7,6 @@ const RootLayout = () => {
       <MainContent>
         <Outlet />
       </MainContent>
-      ;
     </MainContainer>
   );
 };

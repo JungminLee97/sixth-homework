@@ -11,17 +11,29 @@ const TodoProvider = ({ children }) => {
 
   const handlesUpdated = (id) => {
     setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      })
+      prevTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              completed: !todo.completed,
+            }
+          : todo
+      )
     );
   };
 
   const handleDelete = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
+  const getFilteredTodos = (selectedFilter) => {
+    if (selectedFilter === "completed") {
+      return todos.filter((todo) => todo.completed);
+    }
+    if (selectedFilter === "pending") {
+      return todos.filter((todo) => !todo.completed);
+    }
+    return todos;
   };
 
   return (
@@ -31,6 +43,7 @@ const TodoProvider = ({ children }) => {
         handleDelete,
         handlesUpdated,
         addTodos,
+        getFilteredTodos
       }}
     >
       {children}
