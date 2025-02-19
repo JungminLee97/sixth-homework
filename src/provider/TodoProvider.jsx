@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TodoContext } from "../context/TodoContext";
-import { SAMPLE_TODOS } from "../constants/sample-todos";
+import { TodoContext } from "../../context/TodoContext";
+import { SAMPLE_TODOS } from "../../constants/sample-todos";
 
 const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState(SAMPLE_TODOS);
@@ -9,7 +9,7 @@ const TodoProvider = ({ children }) => {
     setTodos([{ id: crypto.randomUUID(), text, completed: false }, ...todos]);
   };
 
-  const handlesUpdated = (id) => {
+  const toggleTodoCompleted = (id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
         todo.id === id
@@ -22,7 +22,8 @@ const TodoProvider = ({ children }) => {
     );
   };
 
-  const handleDelete = (id) => {
+  const deleteTodo = (id) => {
+    // todo.id가 내가 찾는 id와 같지 않을 때 true를 반환하여 그대로 남겨둠
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
@@ -30,9 +31,11 @@ const TodoProvider = ({ children }) => {
     if (selectedFilter === "completed") {
       return todos.filter((todo) => todo.completed);
     }
+
     if (selectedFilter === "pending") {
       return todos.filter((todo) => !todo.completed);
     }
+
     return todos;
   };
 
@@ -40,10 +43,10 @@ const TodoProvider = ({ children }) => {
     <TodoContext.Provider
       value={{
         todos,
-        handleDelete,
-        handlesUpdated,
         addTodos,
-        getFilteredTodos
+        toggleTodoCompleted,
+        deleteTodo,
+        getFilteredTodos,
       }}
     >
       {children}

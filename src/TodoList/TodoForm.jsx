@@ -1,31 +1,34 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import { ActionButton } from "./TodoItem";
-import { TodoContext } from "../context/TodoContext";
+import { TodoContext } from "../../context/TodoContext";
 
 const TodoForm = () => {
-  const [newTodo, setNewTodo] = useState("");
   const { addTodos } = useContext(TodoContext);
+  const [todoText, setTodoText] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!newTodo.trim()) {
+    if (!todoText.trim()) {
       return;
     }
 
-    addTodos(newTodo);
+    addTodos(todoText);
 
-    setNewTodo("");
+    setTodoText("");
   };
 
-  const handleInputChange = (event) => setNewTodo(event.target.value);
+  const handleChangeTodoText = (e) => {
+    setTodoText(e.target.value);
+  };
 
   return (
     <TodoFormWrapper onSubmit={handleSubmit}>
       <TodoFormInput
         type="text"
-        value={newTodo}
-        onChange={handleInputChange}
+        value={todoText}
+        onChange={handleChangeTodoText}
         placeholder="할 일을 입력하세요"
       />
       <SubmitButton type="submit" $bgColor="#582be6">
@@ -38,8 +41,8 @@ const TodoForm = () => {
 const TodoFormWrapper = styled.form`
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 `;
 
 const TodoFormInput = styled.input`
@@ -53,6 +56,7 @@ const TodoFormInput = styled.input`
   &::placeholder {
     color: #aaa;
   }
+
   &:focus {
     border-color: #582be6;
     outline: none;

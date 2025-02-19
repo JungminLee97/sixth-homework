@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { TodoContext } from "../context/TodoContext";
+import { TodoContext } from "../../context/TodoContext";
 import { Link, useNavigate } from "react-router";
 
 const TodoItem = ({ completed, text, id }) => {
-  const { handlesUpdated, handleDelete } = useContext(TodoContext);
+  const { toggleTodoCompleted, deleteTodo } = useContext(TodoContext);
   const navigate = useNavigate();
+
   const navigateAfterDelete = (id) => {
-    handleDelete(id);
+    deleteTodo(id);
 
     navigate("/");
   };
@@ -20,16 +21,14 @@ const TodoItem = ({ completed, text, id }) => {
 
       <TodoItemActions>
         <ActionButton
-          onClick={() => handlesUpdated(id)}
+          onClick={() => toggleTodoCompleted(id)}
           $bgColor={completed ? "#242424" : "#582be6"}
         >
           {completed ? "취소하기" : "완료하기"}
         </ActionButton>
 
         <ActionButton
-          onClick={() => {
-            navigateAfterDelete(id);
-          }}
+          onClick={() => navigateAfterDelete(id)}
           $bgColor="#ff4033"
         >
           삭제하기
@@ -67,6 +66,7 @@ const TodoItemActions = styled.div`
   flex-wrap: wrap;
   gap: 0.5rem;
 `;
+
 export const ActionButton = styled.button`
   background-color: ${({ $bgColor = "#e6582b" }) => $bgColor};
   color: white;

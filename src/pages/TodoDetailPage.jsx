@@ -1,7 +1,7 @@
-import { Link, useParams } from "react-router";
-import TodoItem, { ActionButton } from "../TodoList/TodoItem";
-import styled from "styled-components";
 import { useContext } from "react";
+import { Link, useParams } from "react-router";
+import styled from "styled-components";
+import TodoItem, { ActionButton } from "../components/todo/TodoItem";
 import { TodoContext } from "../context/TodoContext";
 
 const TodoDetailPage = () => {

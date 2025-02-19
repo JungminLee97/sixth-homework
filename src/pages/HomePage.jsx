@@ -1,4 +1,4 @@
-import TodoContainer from "../TodoList/TodoContainer";
+import TodoContainer from "../components/todo/TodoContainer";
 
 const HomePage = () => {
   return <TodoContainer />;
