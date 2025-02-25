@@ -1,23 +1,17 @@
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
-import { useContext } from "react";
-import { TodoContext } from "../../context/TodoContext";
-import { useSearchParams } from "react-router";
+import { useTodoQuery } from "../../hooks/useTodoQuery";
+import { useFilterParams } from "../../hooks/userFilterParams";
 
 const TodoList = () => {
-  const { getFilteredTodos } = useContext(TodoContext);
-  const [searchParams] = useSearchParams();
-
-  const selectedFilter = searchParams.get("filter");
-
-  const filteredTodos = getFilteredTodos(selectedFilter);
-
+  const selectedFilter = useFilterParams();
+  const { data: todos } = useTodoQuery(selectedFilter);
   return (
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
 
       <TodoListContent>
-        {filteredTodos.map(({ id, text, completed }) => (
+        {todos?.map(({ id, text, completed }) => (
           <TodoItem key={id} completed={completed} text={text} id={id} />
         ))}
       </TodoListContent>

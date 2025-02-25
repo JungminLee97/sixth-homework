@@ -1,10 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ActionButton } from "./TodoItem";
-import { TodoContext } from "../../context/TodoContext";
+import { useAddTodoMutation } from "../../hooks/useTodoQuery";
 
 const TodoForm = () => {
-  const { addTodos } = useContext(TodoContext);
+  const { mutate: addTodoMutate } = useAddTodoMutation();
+
   const [todoText, setTodoText] = useState("");
   const inputRef = useRef(null);
 
@@ -15,7 +16,7 @@ const TodoForm = () => {
       return;
     }
 
-    addTodos(todoText);
+    addTodoMutate(todoText);
 
     setTodoText("");
   };

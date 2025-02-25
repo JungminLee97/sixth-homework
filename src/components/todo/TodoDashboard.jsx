@@ -1,17 +1,15 @@
 import { FileCheck, LaptopMinimal, Video } from "lucide-react";
-import { useContext } from "react";
 import styled from "styled-components";
-import { TodoContext } from "../../context/TodoContext";
-import { Link, useSearchParams } from "react-router";
+import { Link } from "react-router";
+import { useTodoQuery } from "../../hooks/useTodoQuery";
+import { useFilterParams } from "../../hooks/userFilterParams";
 
 const TodoDashboard = () => {
-  const { getFilteredTodos } = useContext(TodoContext);
-  const [searchParams] = useSearchParams();
-  const selectedFilter = searchParams.get("filter");
+  const selectedFilter = useFilterParams();
 
-  const all = getFilteredTodos().length;
-  const completed = getFilteredTodos("completed").length;
-  const pending = all - completed;
+  const { data: all } = useTodoQuery();
+  const { data: completed } = useTodoQuery("completed");
+  const { data: pending } = useTodoQuery("pending");
 
   return (
     <TodoDashboardSection>
@@ -24,7 +22,7 @@ const TodoDashboard = () => {
               <FileCheck />
             </div>
             <TodoDashboardCardContent>
-              {all} <br /> <span>All Tasks</span>
+              {all?.length} <br /> <span>All Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
@@ -38,7 +36,7 @@ const TodoDashboard = () => {
               <LaptopMinimal />
             </div>
             <TodoDashboardCardContent>
-              {completed} <br /> <span>Completed Tasks</span>
+              {completed?.length} <br /> <span>Completed Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
@@ -52,7 +50,7 @@ const TodoDashboard = () => {
               <Video />
             </div>
             <TodoDashboardCardContent>
-              {pending} <br /> <span>Pending Tasks</span>
+              {pending?.length} <br /> <span>Pending Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
